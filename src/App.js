@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import Board from "./components/Board";
+import useCreateBoard from "./hooks/useCreateBoard";
+import boardReducer from "./reducers/boardReducer";
+import BoardContext from "./context/BoardContext";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () => {
+  const [board, boardDispatch] = useReducer(
+    boardReducer,
+    useCreateBoard(10, 10, 10)
   );
-}
+
+  return (
+    <BoardContext.Provider value={{ board, boardDispatch }}>
+      <div className="App">
+        <div className="ui container">
+          <Board />
+        </div>
+      </div>
+    </BoardContext.Provider>
+  );
+};
 
 export default App;
