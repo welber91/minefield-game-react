@@ -13,3 +13,12 @@ th {
   width: 30px;
   padding: 0px;
 }
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+.icon-min {
+  width: 20px;
+  height: 20px;
+}

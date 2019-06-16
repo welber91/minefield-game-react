@@ -5,7 +5,7 @@ import BoardContext from "../context/BoardContext";
 const Board = () => {
   const { board } = useContext(BoardContext);
   return (
-    <table>
+    <table style={{ margin: "auto" }}>
       <tbody>
         {board.map((row, px) => (
           <tr key={`r_${px}`}>

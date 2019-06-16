@@ -1,32 +1,21 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import BoardContext from "../context/BoardContext";
 import "./Square.css";
 
 const Square = ({ x, y, cell }) => {
-  const { boardDispatch } = useContext(BoardContext);
+  const { boardDispatch, gameState } = useContext(BoardContext);
   const { clicked, flag, content } = cell;
-
-  //Run one time when this component is mounted
-  //Run the return stetament when component is unmounted
-  // useEffect(() => {
-  //   const onRightClick = e => {
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //     boardDispatch({ type: "RIGHT_CLICK", x, y });
-  //   };
-  //   document.addEventListener("contextmenu", onRightClick);
-  //   return () => {
-  //     document.removeEventListener("contextmenu", onRightClick);
-  //   };
-  // }, []);
+  const { gameFinished } = gameState;
 
   const onRightClick = e => {
     e.preventDefault();
     e.stopPropagation();
+    if (gameFinished) return;
     boardDispatch({ type: "RIGHT_CLICK", x, y });
   };
 
   const onSquareClick = e => {
+    if (gameFinished) return;
     boardDispatch({ type: "CLICK", x, y });
   };
 
@@ -37,8 +26,19 @@ const Square = ({ x, y, cell }) => {
   };
 
   const renderContent = () => {
-    if (flag) return "F";
-    if (clicked && content !== 0) return content;
+    if (clicked && content === "B")
+      return (
+        <svg class="icon-min">
+          <use href="#bomb" />
+        </svg>
+      );
+    if (flag)
+      return (
+        <svg className="icon-min">
+          <use href="#flag" />
+        </svg>
+      );
+    if (clicked && content !== 0 && content !== "B") return content;
     return null;
   };
 
